@@ -26,4 +26,6 @@ SelectView.prototype.populate = function(instrumentsData){
     this.element.appendChild(option);
 
   })
-}
+};
+
+module.exports = SelectView;
