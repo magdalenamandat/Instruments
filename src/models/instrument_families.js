@@ -1,3 +1,5 @@
+const PubSub = require('../helpers/pub_sub.js');
+
 const InstrumentFamilies = function() {
   this.instrumentFamilies = [
     {
@@ -26,6 +28,18 @@ const InstrumentFamilies = function() {
       instruments: ['piano', 'organ', 'electronic keyboard', 'synthesizer']
     }
   ];
+};
+
+InstrumentFamilies.prototype.bindEvents = function(){
+  PubSub.publish('Instruments:all-instruments-ready', this.instrumentFamilies);
+  PubSub.subscribe('SelectView:change', (evt) => {
+    const selectedIndex = evt.detail;
+    this.publishInstrumentDetail(selectedIndex);
+  });
+
+InstrumentsFamilies.prototype.publishInstrumentFamiliesDetail = function(instrumentIndex){
+  const selectedInstrument = this.instrumentFamilies[instrumentIndex];
+  PubSub.publish('Instruments:selected-instrument-ready', selectedInstrument)
 };
 
 module.exports = InstrumentFamilies;
